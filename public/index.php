@@ -9,5 +9,5 @@ $view = new View();
 $model = new Model($config, $view);
 $model->getTodos();
 $controller = new Controller($model);
-// $controller->route();
+$controller->route();
 

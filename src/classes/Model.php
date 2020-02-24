@@ -32,11 +32,11 @@ class Model
     public function addTodo() {
         $stmt = $this->conn->prepare("INSERT 
         INTO todos (summary, description, deadline, user_id)
-        VALUES (:summary, :description, :deadline, :user_id)");
+        VALUES (:summary, :description, :deadline, 1)");
         $stmt->bindParam(':summary', $_POST['summary']);
         $stmt->bindParam(':description', $_POST['description']);
         $stmt->bindParam(':deadline', $_POST['deadline']);
-        $stmt->bindParam(':user_id', 1);
+        // $stmt->bindParam(':user_id', 1);
 
         $stmt->execute();
         $this->getTodos();
@@ -51,11 +51,11 @@ class Model
 
         $stmt->bindParam(':todoid', $_POST['delBtn']);
         $stmt->execute();
-        $this->getSongs();
+        $this->getTodos();
         //"DELETE FROM `todos` WHERE `todos`.`id` = 3"
     }
 
-    public function updateSongs()
+    public function updateTodos()
     {
         $stmt = $this->conn->prepare("UPDATE todos
                 SET summary = (:summary),
@@ -68,7 +68,7 @@ class Model
 
         $stmt->bindParam(':todoid', $_POST['updateBtn']);
         $stmt->execute();
-        $this->getSongs();
+        $this->getTodos();
         //UPDATE `todos` SET `summary` = 'Finish final home work quickly' WHERE `todos`.`id` = 3
     }
 
