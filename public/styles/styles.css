@@ -5,10 +5,10 @@ h1 {
 
 .todos-cont {
     display: flex;
-    justify-content: space-between;;
+    justify-content: center;
 }
 
-.track-cell {
+.todos-cell {
     display: inline-block;
     height: 20px;
     background-color: palegoldenrod;
@@ -20,7 +20,7 @@ h1 {
     margin: 5px;
 }
 
-.tracks-header-cont {
+.todos-header-cont {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
