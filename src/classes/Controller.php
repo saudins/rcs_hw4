@@ -13,7 +13,7 @@ class Controller
         // var_dump($_POST);
 
         if(isset($_POST['addBtn'])) {
-            var_dump($_POST);
+            // var_dump($_POST);
             $this->model->addTodo();
         } elseif (isset($_POST['delBtn'])) {
             // var_dump($_POST);

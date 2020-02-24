@@ -7,6 +7,6 @@
 <label for="deadline">Deadline</label>
 <input type="date" name="deadline" required min="2020-02-24">
 
-<button type="submit" name="addBtn">Add new Todo!</button>
+<button type="submit" name="addBtn">ADD NEW TODO!</button>
 
 </form>
