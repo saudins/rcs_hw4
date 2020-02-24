@@ -3,14 +3,16 @@ class View
 {
     public function render()
     {
-        //print all screen?
+        //function to print all screen later? 
     }
 
     public function getTodos()
     {
-        require_once "../templates/head.php";
+        require_once "../src/templates/head.php";
         echo "<h1>THIS IS THE BEGINNING!</h1>";
-        require_once "../templates/footer.php";
+
+
+        require_once "../src/templates/footer.php";
     }
 
 
