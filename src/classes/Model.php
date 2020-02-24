@@ -17,6 +17,17 @@ class Model
         echo "<hr>Connected Successfully!<hr>";
     }
 
-
+    public function getTodos() {
+        $stmt = $this->conn->prepare(
+            "SELECT *
+            FROM todos
+            WHERE user_id = 1");
+        // $stmt->bindParam(':todo', $todos);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $allRows = $stmt->fetchAll();
+        // var_dump($allRows);
+        $this->view->printTodos($allRows);
+    }
 }
 ?>

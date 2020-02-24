@@ -6,8 +6,8 @@ require_once "../src/classes/View.php";
 require_once "../src/classes/Controller.php";
 
 $view = new View();
-$view->getTodos();
 $model = new Model($config, $view);
+$model->getTodos();
 $controller = new Controller($model);
 // $controller->route();
 

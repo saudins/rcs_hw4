@@ -1,3 +1,26 @@
 h1 {
     color: pink;
+    text-transform: uppercase;
+}
+
+.todos-cont {
+    display: flex;
+    justify-content: space-between;;
+}
+
+.track-cell {
+    display: inline-block;
+    height: 20px;
+    background-color: palegoldenrod;
+    margin: 5px;
+}
+
+.col-fields {
+    background-color: blanchedalmond;
+    margin: 5px;
+}
+
+.tracks-header-cont {
+    display: flex;
+    justify-content: space-between;
 }
