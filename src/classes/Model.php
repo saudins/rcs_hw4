@@ -17,10 +17,16 @@ class Model
     }
 
     public function getTodos() {
+        $userid = 0; //we assume we are not logged in yet
+        if (isset($_SESSION['id'])) {
+            // die("Need to figure out what to show when user is not logged in");
+            $userid = $_SESSION['id'];
+            //consider not doing anything maybe
+        }
         $stmt = $this->conn->prepare(
             "SELECT *
             FROM todos
-            WHERE user_id = 1");
+            WHERE user_id = $userid");
         // $stmt->bindParam(':todo', $todos);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -30,13 +36,19 @@ class Model
     }
 
     public function addTodo() {
+       
+        if (!isset($_SESSION['id'])) {
+            die("Need to figure out what to show when user is not logged in");
+            //consider not doing anything maybe
+        }
+
         $stmt = $this->conn->prepare("INSERT 
         INTO todos (summary, description, deadline, user_id)
-        VALUES (:summary, :description, :deadline, 1)");
+        VALUES (:summary, :description, :deadline, :user_id)");
         $stmt->bindParam(':summary', $_POST['summary']);
         $stmt->bindParam(':description', $_POST['description']);
         $stmt->bindParam(':deadline', $_POST['deadline']);
-        // $stmt->bindParam(':user_id', 1);
+        $stmt->bindParam(':user_id', $_SESSION['id']);
 
         $stmt->execute();
         $this->getTodos();
@@ -72,6 +84,71 @@ class Model
         //UPDATE `todos` SET `summary` = 'Finish final home work quickly' WHERE `todos`.`id` = 3
     }
 
+    public function getRegister()
+    {
+        $this->view->printRegister();
+    }
+
+    public function getId($username)
+    {
+        //return user id or 0 if no such user
+        $stmt = $this->conn->prepare("SELECT
+        id FROM users
+        WHERE (name = :name)
+    ");
+        $stmt->bindParam(':name', $username);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+        if (count($result) > 0) {
+            // var_dump($result);
+            // die("For now");
+            return $result[0]['id'];
+        } else {
+            return 0;
+        }
+    }
+
+    public function getHash($username)
+    {
+        $stmt = $this->conn->prepare("SELECT
+        hash FROM users
+        WHERE (name = :name)
+    ");
+        $stmt->bindParam(':name', $username);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+        if (count($result) > 0) {
+            // var_dump($result);
+            // die("For now");
+            return $result[0]['hash'];
+        } else {
+            return 0;
+        }
+    }
+
+    public function addNewUser()
+    {
+        if ($this->getHash($_POST['username']) != 0) {
+            // die("Got this user already");
+            //or possible bad hash
+            header('Location: /register.php');
+            exit();
+        }
+
+        //https://stackoverflow.com/questions/1361340/how-to-insert-if-not-exists-in-mysql
+        $stmt = $this->conn->prepare("INSERT INTO `users`
+            (`id`, `name`, `email`, `hash`, `created`)
+            VALUES (NULL, :name, :email, :hash, current_timestamp())");
+        $stmt->bindParam(':name', $_POST['username']);
+        $stmt->bindParam(':email', $_POST['email']);
+        $hash = password_hash($_POST['pw1'], PASSWORD_DEFAULT);
+        $stmt->bindParam(':hash', $hash);
+
+        $stmt->execute();
+        $this->view->printRegister();
+    }
 }
 
 ?>

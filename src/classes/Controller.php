@@ -10,6 +10,13 @@ class Controller
 
 
     private function getReq() {
+
+        if (basename($_SERVER['PHP_SELF']) === 'register.php') {
+            echo "Processing register get";
+            $this->model->getRegister();
+            return;
+        }
+        
         $this->model->getTodos();
     }
 
@@ -17,6 +24,11 @@ class Controller
     private function postReq() {
         // echo "Post request<br>";
         // var_dump($_POST);
+        if (basename($_SERVER['PHP_SELF']) === 'register.php') {
+            // echo "Processing register post";
+            $this->model->addNewUser();
+            return;
+        }
 
         if(isset($_POST['addBtn'])) {
             // var_dump($_POST);

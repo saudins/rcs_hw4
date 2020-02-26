@@ -50,4 +50,13 @@ class View
         }
         require_once "../src/templates/footer.php";
     }
+
+    public function printRegister()
+    {
+        require_once "../src/templates/head.php";
+        require_once "../src/templates/header.php";
+        require_once "../src/templates/register_inputs.php";
+        require_once "../src/templates/footer.php";
+
+    }
 }
