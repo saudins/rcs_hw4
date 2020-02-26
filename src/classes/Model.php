@@ -59,6 +59,10 @@ class Model
     
     public function deleteTodos()
     {
+        if (!isset($_SESSION['id'])) {
+            return;
+        }
+        
         $stmt = $this->conn->prepare("DELETE FROM todos WHERE id = (:todoid)");
 
         $stmt->bindParam(':todoid', $_POST['delBtn']);

@@ -2,14 +2,21 @@
 class View
 {
     public function printTodos($todos) {
+
         require_once "../src/templates/head.php";
         require_once "../src/templates/header.php";
-        echo "<h1>My ToDo App</h1><hr>";
-        echo "<div class='add-new-todo'>";
-        echo "<h2>Add new Todo</h2>";
-        include_once "../src/templates/add_todo.php";
-        echo "</div>";
-        echo "<h2>Printing todos</h2>";
+        require_once "../src/templates/login_inputs.php";
+        
+        echo "<h1>My ToDo App</h1>";
+        
+        if (!isset($_SESSION['id'])) {
+            echo "<h2>Please login to see your TODOS</h2>";
+        } else {
+            echo "<div class='add-new-todo'>";
+            echo "<h2>Add new Todo</h2>";
+            include_once "../src/templates/add_todo.php";
+            echo "</div>";
+            echo "<h2>Printing todos</h2>";
         // foreach ($todos as $todo) {
         //     echo "<br>";
         //     print_r($todo);
@@ -48,7 +55,9 @@ class View
             echo "</form>";
             echo "</div>";
         }
-        require_once "../src/templates/footer.php";
+
+        }
+                require_once "../src/templates/footer.php";
     }
 
     public function printRegister()
