@@ -13,7 +13,7 @@ class Model
         $pw = $config['pw'];
         $this->conn = new PDO("mysql:host=$server;dbname=$db;charset=utf8", $user, $pw);
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "<hr>Connected Successfully!<hr>";
+        // echo "<hr>Connected Successfully!<hr>";
     }
 
     public function getTodos() {
@@ -24,7 +24,7 @@ class Model
             //consider not doing anything maybe
         }
         $stmt = $this->conn->prepare(
-            "SELECT *
+            "SELECT id, summary, description, deadline
             FROM todos
             WHERE user_id = $userid");
         // $stmt->bindParam(':todo', $todos);
@@ -62,7 +62,7 @@ class Model
         if (!isset($_SESSION['id'])) {
             return;
         }
-        
+
         $stmt = $this->conn->prepare("DELETE FROM todos WHERE id = (:todoid)");
 
         $stmt->bindParam(':todoid', $_POST['delBtn']);
@@ -132,6 +132,26 @@ class Model
         }
     }
 
+    public function getUser($username)
+    {
+        //return user id or 0 if no such user
+        $stmt = $this->conn->prepare("SELECT
+        name FROM users
+        WHERE (name = :name)
+    ");
+        $stmt->bindParam(':name', $username);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+        if (count($result) > 0) {
+            // var_dump($result);
+            // die("For now");
+            return $result[0]['name'];
+        } else {
+            return 0;
+        }
+    }
+
     public function addNewUser()
     {
         if ($this->getHash($_POST['username']) != 0) {
@@ -141,18 +161,25 @@ class Model
             exit();
         }
 
-        //https://stackoverflow.com/questions/1361340/how-to-insert-if-not-exists-in-mysql
-        $stmt = $this->conn->prepare("INSERT INTO `users`
+        if ($_POST['pw1'] !== $_POST['pw2']) {
+            header('Location: /register.php');
+            // echo ("Passwords don't match"); 
+            exit();
+        } else {
+            //https://stackoverflow.com/questions/1361340/how-to-insert-if-not-exists-in-mysql
+            $stmt = $this->conn->prepare("INSERT INTO `users`
             (`id`, `name`, `email`, `hash`, `created`)
             VALUES (NULL, :name, :email, :hash, current_timestamp())");
-        $stmt->bindParam(':name', $_POST['username']);
-        $stmt->bindParam(':email', $_POST['email']);
-        $hash = password_hash($_POST['pw1'], PASSWORD_DEFAULT);
-        $stmt->bindParam(':hash', $hash);
+            $stmt->bindParam(':name', $_POST['username']);
+            $stmt->bindParam(':email', $_POST['email']);
+            $hash = password_hash($_POST['pw1'], PASSWORD_DEFAULT);
+            $stmt->bindParam(':hash', $hash);
 
-        $stmt->execute();
-        $this->view->printRegister();
-    }
+            $stmt->execute();
+            $this->view->registerOK();
+            }
+        }
+        
 }
 
 ?>

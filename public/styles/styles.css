@@ -1,3 +1,14 @@
+body {
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
+    text-align: justify;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: 70%;
+}
+
 h1 {
     color: pink;
     text-transform: uppercase;
@@ -11,8 +22,6 @@ h1 {
 .todos-cell {
     display: inline-block;
     height: 20px;
-    background-color: palegoldenrod;
-    margin: 5px;
 }
 
 .col-fields {
@@ -24,3 +33,28 @@ h1 {
     display: flex;
     justify-content: center;
 }
+
+nav {
+    margin-bottom: 50px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.two-buttons {
+    text-align: center;
+}
+
+::placeholder {
+    text-indent: 2%;
+}
+
+input:-webkit-autofill {
+    text-indent: 2%;
+}
+
+/* .register-input {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+} */

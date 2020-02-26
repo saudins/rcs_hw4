@@ -12,7 +12,7 @@ class Controller
     private function getReq() {
 
         if (basename($_SERVER['PHP_SELF']) === 'register.php') {
-            echo "Processing register get";
+            // echo "Processing register get";
             $this->model->getRegister();
             return;
         }
