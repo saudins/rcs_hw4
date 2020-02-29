@@ -35,6 +35,64 @@ class Model
         $this->view->printTodos($allRows);
     }
 
+    public function getCountOfAllTodos() {
+        $userid = 0; //we assume we are not logged in yet
+        if (isset($_SESSION['id'])) {
+            // die("Need to figure out what to show when user is not logged in");
+            $userid = $_SESSION['id'];
+            //consider not doing anything maybe
+        }
+        $stmt = $this->conn->prepare(
+            "SELECT *
+            FROM todos
+            WHERE user_id = $userid");
+        // $stmt->bindParam(':todo', $todos);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $allRows = $stmt->fetchAll();
+        // var_dump($allRows);
+        $num_rows = mysqli_num_rows($allRows);
+        return $num_rows;
+    }
+
+    public function getTodosForToday() {
+        $userid = 0; //we assume we are not logged in yet
+        if (isset($_SESSION['id'])) {
+            // die("Need to figure out what to show when user is not logged in");
+            $userid = $_SESSION['id'];
+            //consider not doing anything maybe
+        }
+        $stmt = $this->conn->prepare(
+            "SELECT id, summary, description, deadline
+            FROM todos
+            WHERE user_id = $userid and deadline = CURDATE()");
+        // $stmt->bindParam(':todo', $todos);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $allRows = $stmt->fetchAll();
+        // var_dump($allRows);
+        $this->view->printTodos($allRows);
+    }
+
+    public function getTodosOverdue() {
+        $userid = 0; //we assume we are not logged in yet
+        if (isset($_SESSION['id'])) {
+            // die("Need to figure out what to show when user is not logged in");
+            $userid = $_SESSION['id'];
+            //consider not doing anything maybe
+        }
+        $stmt = $this->conn->prepare(
+            "SELECT id, summary, description, deadline
+            FROM todos
+            WHERE user_id = $userid and deadline < CURDATE()");
+        // $stmt->bindParam(':todo', $todos);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $allRows = $stmt->fetchAll();
+        // var_dump($allRows);
+        $this->view->printTodos($allRows);
+    }
+
     public function addTodo() {
        
         if (!isset($_SESSION['id'])) {
@@ -127,26 +185,6 @@ class Model
             // var_dump($result);
             // die("For now");
             return $result[0]['hash'];
-        } else {
-            return 0;
-        }
-    }
-
-    public function getUser($username)
-    {
-        //return user id or 0 if no such user
-        $stmt = $this->conn->prepare("SELECT
-        name FROM users
-        WHERE (name = :name)
-    ");
-        $stmt->bindParam(':name', $username);
-        $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $result = $stmt->fetchAll();
-        if (count($result) > 0) {
-            // var_dump($result);
-            // die("For now");
-            return $result[0]['name'];
         } else {
             return 0;
         }

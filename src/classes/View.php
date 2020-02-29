@@ -1,43 +1,41 @@
 <?php
 class View
 {
+
     public function printTodos($todos) {
 
         require_once "../src/templates/head.php";
         require_once "../src/templates/header.php";
         require_once "../src/templates/login_inputs.php";
 
-        // echo "<h1>My ToDo App</h1>";
-        
         if (!isset($_SESSION['id'])) {
-            echo "<img src='../../public/assets/to-do.jpeg' alt='to-do-app.jgp'>";
+            echo "<img id='hero' src='assets/to-do.jpeg' alt='to-do-app.jgp'>";
         } else {
+            $num= $_SESSION['count'];
+            $user = $_SESSION['user'];
+            echo "<h1>To-Do App</h1>";
+            echo "<h2>Hi, $user! You have $num to-dos</h2>";
+            
             echo "<div class='add-new-todo'>";
-            // echo "<h2>Hi $name</h2>";
-            echo "<h2>Add new Todo</h2>";
             include_once "../src/templates/add_todo.php";
             echo "</div>";
-            echo "<h2>Printing todos</h2>";
-        // foreach ($todos as $todo) {
-        //     echo "<br>";
-        //     print_r($todo);
-        // }
-
-        $areColumnsSet = false;
-
-        foreach ($todos as $index => $row) {
-            // if (!$areColumnsSet) {
-            //     echo "<div class='todos-header-cont'>";
-            //     foreach ($row as $colname => $cell) {
-            //         echo "<span class='col-fields'>$colname</span>";
-            //     }
-            //     echo "</div>";
-            //     $areColumnsSet = true;
-            // }
         
+            echo "<h3>My To-Do-s</h3>";
+            echo "<div class='filter-buttons'>";
+            echo "<form action='index.php' method='POST'>";
+            echo "<button type='submit' name='allBtn' value='' class='waves-effect waves-teal btn'>All</button>";
+            echo "<button type='submit' name='todayBtn' value='' class='waves-effect waves-teal btn'>For Today</button>";
+            echo "<button type='submit' name='overdueBtn' value='' class='waves-effect waves-orange btn red'>Already Overdue</button>";
+            echo "</form>";
+            echo "</div>";
+
+        foreach ($todos as $key => $row) { 
+            
             echo "<div class='todos-cont'>";
             echo "<form action='index.php' method='POST'>";
+            
             $rowid = $row['id'];
+            
             foreach ($row as $colname => $cell) {
                 switch ($colname) {
                     case "summary":
@@ -53,13 +51,9 @@ class View
                         echo "<div>";
                         echo "<span class='todos-cell'>$cell</span>";
                         echo "</div>";
-                    default:
-                        echo "<div>";
-                        echo "<span class='todos-cell'></span>";
-                        echo "</div>";
-                        break;
                 }
             }
+
             echo "<div class='two-buttons'>";
             echo "<button type='submit' name='delBtn' name='delBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Delete</button>";
             echo "<button type='submit' name='updateBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Update</button>";

@@ -1,5 +1,5 @@
-<!-- <h2>Add New Todo</h2> -->
-<ul class='collapsible popout' data-collapsible='accordion'>
+<h3>Add New Todo</h3>
+<ul class='collapsible' data-collapsible='accordion'>
     <li>
         <div class="collapsible-header">
             <i class = "material-icons">filter_drama</i>Add New To-Do</div>

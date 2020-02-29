@@ -12,12 +12,15 @@ class Controller
     private function getReq() {
 
         if (basename($_SERVER['PHP_SELF']) === 'register.php') {
-            // echo "Processing register get";
+
             $this->model->getRegister();
             return;
+
+        } else {
+            $this->model->getTodos();
         }
-        
-        $this->model->getTodos();
+           
+       
     }
 
 
@@ -38,7 +41,14 @@ class Controller
             $this->model->deleteTodos();
         } elseif (isset($_POST['updateBtn'])) {
             $this->model->updateTodos();
-        } else {
+        } elseif (isset($_POST['todayBtn'])) {
+            $this->model->getTodosForToday();
+        } elseif (isset($_POST['overdueBtn'])) {
+            $this->model->getTodosOverdue();
+        } elseif (isset($_POST['allBtn'])) {
+            $this->model->getTodos();
+        } 
+        else {
             echo "What button did you press??";
             var_dump($_POST);
         }
