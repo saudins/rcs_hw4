@@ -21,28 +21,29 @@ class View
             echo "</div>";
         
             echo "<h3>My To-Do-s</h3>";
-            echo "<div class='filter-buttons'>";
-            echo "<form action='index.php' method='POST'>";
-            echo "<button type='submit' name='allBtn' value='' class='waves-effect waves-teal btn'>All</button>";
-            echo "<button type='submit' name='todayBtn' value='' class='waves-effect waves-teal btn'>For Today</button>";
-            echo "<button type='submit' name='overdueBtn' value='' class='waves-effect waves-orange btn red'>Already Overdue</button>";
-            echo "</form>";
-            echo "</div>";
+            include_once "../src/templates/filter_buttons.php";
+            include_once "../src/templates/search.php";
 
-        foreach ($todos as $key => $row) { 
+            foreach ($todos as $key => $row) { 
             
-            echo "<div class='todos-cont'>";
+            // echo "<div class='todos-cont'>";
             echo "<form action='index.php' method='POST'>";
+            echo "<ul class='collapsible'>";
+            echo "<li>";
             
             $rowid = $row['id'];
             
             foreach ($row as $colname => $cell) {
+                
                 switch ($colname) {
                     case "summary":
+                        echo "<div class='collapsible-header'><i class='material-icons'>explore</i>$cell</div>";
+                        echo "<div class='collapsible-body'>";
                         echo "<label for='summary'>Summary</label>";
                         echo "<input class='todos-cell' type='text' name='summary' value='$cell'></input>";
                         break;
-                    case "description":
+                    case "description";
+                        
                         echo "<label for='description'>Description</label>";
                         echo "<input class='todos-cell' type='text' name='description' value='$cell'></input>";
                         break;
@@ -58,9 +59,10 @@ class View
             echo "<button type='submit' name='delBtn' name='delBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Delete</button>";
             echo "<button type='submit' name='updateBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Update</button>";
             echo "</div>";
-
-            echo "</form>";
             echo "</div>";
+            echo "</li>";
+            echo "</ul>";
+            echo "</form>";
         }
 
         }
