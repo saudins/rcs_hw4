@@ -14,10 +14,10 @@ h1 {
     text-transform: uppercase;
 }
 
-.todos-cont {
+/* .todos-cont {
     display: flex;
     justify-content: center;
-}
+} */
 
 .todos-cell {
     display: inline-block;
