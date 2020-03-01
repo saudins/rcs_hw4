@@ -2,7 +2,7 @@
 <ul class='collapsible'>
     <li>
    
-        <div class='collapsible-header'><i class='material-icons'>search</i>Search</div>
+        <div class='collapsible-header'><i class='material-icons'>search</i>Search a ToDo</div>
             <div class='collapsible-body'>
                 <label for='summary'>Summary</label>
                 <input class='todos-cell' type='text' name='search-sum' value=''></input>

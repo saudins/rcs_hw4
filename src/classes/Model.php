@@ -44,7 +44,7 @@ class Model
         // var_dump($allRows);
         $this->view->printTodos($allRows);
     }
-    
+
 
     public function getCountOfAllTodos() {
         $userid = 0; //we assume we are not logged in yet

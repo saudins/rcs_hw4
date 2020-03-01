@@ -20,15 +20,17 @@ class View
 
             // $num= $_SESSION['count'];
             $user = $_SESSION['user'];
-            echo "<h1>ToDo App</h1>";
+            echo "<img id='hero-crop' src='assets/to-do-crop.jpg' alt='to-do-app.jgp'>";
+            // echo "<h1>ToDo App</h1>";
             echo "<h2>Hi, $user!</h2>";
             
             echo "<div class='add-new-todo'>";
             include_once "../src/templates/add_todo.php";
             echo "</div>";
         
-            echo "<h3>Your ToDo-s</h3>";
             include_once "../src/templates/search.php";
+
+            echo "<h3>Your ToDo-s</h3>";
             include_once "../src/templates/filter_buttons.php";
 
 
@@ -42,30 +44,30 @@ class View
             $rowid = $row['id'];
             
             foreach ($row as $colname => $cell) {
-                
-                switch ($colname) {
-                    case "summary":
-                        echo "<div class='collapsible-header'><i class='material-icons'>explore</i>$cell</div>";
-                        echo "<div class='collapsible-body'>";
-                        echo "<label for='summary'>Summary</label>";
-                        echo "<input class='todos-cell' type='text' name='summary' value='$cell'></input>";
-                        break;
-                    case "description";
-                        
-                        echo "<label for='description'>Description</label>";
-                        echo "<input class='todos-cell' type='text' name='description' value='$cell'></input>";
-                        break;
-                    case "deadline":
-                        echo "<label for='deadline'>Deadline</label>";
-                        echo "<div>";
-                        echo "<span class='todos-cell'>$cell</span>";
-                        echo "</div>";
-                }
+
+                    switch ($colname) {
+                        case "summary":
+                            echo "<div class='collapsible-header'><i class='material-icons'>explore</i>$cell</div>";
+                            echo "<div class='collapsible-body'>";
+                            echo "<label for='summary'>Summary</label>";
+                            echo "<input class='todos-cell' type='text' name='summary' value='$cell'></input>";
+                            break;
+                        case "description";
+                            
+                            echo "<label for='description'>Description</label>";
+                            echo "<input class='todos-cell' type='text' name='description' value='$cell'></input>";
+                            break;
+                        case "deadline":
+                            echo "<label for='deadline'>Deadline</label>";
+                            echo "<div>";
+                            echo "<span class='todos-cell'>$cell</span>";
+                            echo "</div>";
+                    }
             }
 
             echo "<div class='two-buttons'>";
-            echo "<button type='submit' name='doneBtn' name='doneBtn' value='$rowid' class='waves-effect waves-teal btn'>Mark As Done</button>";
-            echo "<button type='submit' name='delBtn' name='delBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Delete</button>";
+            echo "<button type='submit' name='doneBtn' id='doneBtn' value='$rowid' class='waves-effect waves-teal btn'>Mark As Done</button>";
+            echo "<button type='submit' name='delBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Delete</button>";
             echo "<button type='submit' name='updateBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Update</button>";
             echo "</div>";
             echo "</div>";
