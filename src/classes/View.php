@@ -11,18 +11,26 @@ class View
         if (!isset($_SESSION['id'])) {
             echo "<img id='hero' src='assets/to-do.jpeg' alt='to-do-app.jgp'>";
         } else {
-            $num= $_SESSION['count'];
+
+            if (isset($_GET['search-sum'])) {
+                $filterValue = $_GET['search-sum'];
+            } else {
+                $filterValue = "";
+            }
+
+            // $num= $_SESSION['count'];
             $user = $_SESSION['user'];
-            echo "<h1>To-Do App</h1>";
-            echo "<h2>Hi, $user! You have $num to-dos</h2>";
+            echo "<h1>ToDo App</h1>";
+            echo "<h2>Hi, $user!</h2>";
             
             echo "<div class='add-new-todo'>";
             include_once "../src/templates/add_todo.php";
             echo "</div>";
         
-            echo "<h3>My To-Do-s</h3>";
-            include_once "../src/templates/filter_buttons.php";
+            echo "<h3>Your ToDo-s</h3>";
             include_once "../src/templates/search.php";
+            include_once "../src/templates/filter_buttons.php";
+
 
             foreach ($todos as $key => $row) { 
             
@@ -56,6 +64,7 @@ class View
             }
 
             echo "<div class='two-buttons'>";
+            echo "<button type='submit' name='doneBtn' name='doneBtn' value='$rowid' class='waves-effect waves-teal btn'>Mark As Done</button>";
             echo "<button type='submit' name='delBtn' name='delBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Delete</button>";
             echo "<button type='submit' name='updateBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Update</button>";
             echo "</div>";

@@ -1,4 +1,4 @@
-<h3>Add New Todo</h3>
+<!-- <h3>Add New Todo</h3> -->
 <ul class='collapsible' data-collapsible='accordion'>
     <li>
         <div class="collapsible-header">

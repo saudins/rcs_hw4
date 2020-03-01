@@ -16,17 +16,27 @@ class Model
         // echo "<hr>Connected Successfully!<hr>";
     }
 
-    public function getTodos() {
+    public function getTodos($summary = null) {
         $userid = 0; //we assume we are not logged in yet
         if (isset($_SESSION['id'])) {
             // die("Need to figure out what to show when user is not logged in");
             $userid = $_SESSION['id'];
             //consider not doing anything maybe
         }
-        $stmt = $this->conn->prepare(
-            "SELECT id, summary, description, deadline
-            FROM todos
-            WHERE user_id = $userid");
+
+        if($summary) {
+            $summary = "%$summary%";
+            $stmt = $this->conn->prepare(
+                "SELECT id, summary, description, deadline, status
+                FROM todos
+                WHERE summary LIKE (:summary) AND user_id = $userid ORDER BY deadline");
+            $stmt->bindParam(':summary', $summary);
+        } else {
+            $stmt = $this->conn->prepare(
+                "SELECT id, summary, description, deadline, status
+                FROM todos
+                WHERE user_id = $userid ORDER BY deadline");
+        }
         // $stmt->bindParam(':todo', $todos);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -34,6 +44,7 @@ class Model
         // var_dump($allRows);
         $this->view->printTodos($allRows);
     }
+    
 
     public function getCountOfAllTodos() {
         $userid = 0; //we assume we are not logged in yet
@@ -63,7 +74,7 @@ class Model
             //consider not doing anything maybe
         }
         $stmt = $this->conn->prepare(
-            "SELECT id, summary, description, deadline
+            "SELECT id, summary, description, deadline, status
             FROM todos
             WHERE user_id = $userid and deadline = CURDATE()");
         // $stmt->bindParam(':todo', $todos);
@@ -82,9 +93,9 @@ class Model
             //consider not doing anything maybe
         }
         $stmt = $this->conn->prepare(
-            "SELECT id, summary, description, deadline
+            "SELECT id, summary, description, deadline, status
             FROM todos
-            WHERE user_id = $userid and deadline < CURDATE()");
+            WHERE user_id = $userid and deadline < CURDATE() ORDER BY deadline");
         // $stmt->bindParam(':todo', $todos);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -141,6 +152,21 @@ class Model
         $stmt->bindParam(':description', $_POST['description']); //we have <input name="artist"
 
         $stmt->bindParam(':todoid', $_POST['updateBtn']);
+        $stmt->execute();
+        $this->getTodos();
+        //UPDATE `todos` SET `summary` = 'Finish final home work quickly' WHERE `todos`.`id` = 3
+    }
+
+    public function markAsDone()
+    {
+        $stmt = $this->conn->prepare("UPDATE todos
+                SET status = 1,
+                updated = CURRENT_TIMESTAMP()
+                WHERE id = (:todoid)");
+
+        // $stmt->bindParam(':summary', $_POST['summary']); //we have <input name="name"
+        // $stmt->bindParam(':description', $_POST['description']); //we have <input name="artist"
+        $stmt->bindParam(':todoid', $_POST['doneBtn']);
         $stmt->execute();
         $this->getTodos();
         //UPDATE `todos` SET `summary` = 'Finish final home work quickly' WHERE `todos`.`id` = 3

@@ -15,7 +15,10 @@ class Controller
 
             $this->model->getRegister();
             return;
+        }
 
+        if (isset($_GET['search-sum'])) {
+                $this->model->getTodos($_GET['search-sum']);
         } else {
             $this->model->getTodos();
         }
@@ -41,7 +44,10 @@ class Controller
             $this->model->deleteTodos();
         } elseif (isset($_POST['updateBtn'])) {
             $this->model->updateTodos();
-        } elseif (isset($_POST['todayBtn'])) {
+        }elseif (isset($_POST['doneBtn'])) {
+            $this->model->markAsDone();
+        } 
+        elseif (isset($_POST['todayBtn'])) {
             $this->model->getTodosForToday();
         } elseif (isset($_POST['overdueBtn'])) {
             $this->model->getTodosOverdue();
