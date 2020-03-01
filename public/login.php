@@ -23,7 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //https://www.w3schools.com/php/func_network_setcookie.asp
         $cookie_name = "uid";
         $cookie_value = $_SESSION['id'];
-        setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+        if(!empty($_POST['rememberMe'])) {
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+        }
         header('Location: /');
     } else {
         //we could consider adding a specific message about login status

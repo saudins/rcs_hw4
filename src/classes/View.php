@@ -59,16 +59,16 @@ class View
                             break;
                         case "deadline":
                             echo "<label for='deadline'>Deadline</label>";
-                            echo "<div>";
+                            echo "<div class='dead-time'>";
                             echo "<span class='todos-cell'>$cell</span>";
                             echo "</div>";
                     }
             }
 
             echo "<div class='action-buttons'>";
-            echo "<button type='submit' name='doneBtn' id='doneBtn' value='$rowid' class='waves-effect waves-teal btn'>Mark As Done</button>";
-            echo "<button type='submit' name='delBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Delete</button>";
-            echo "<button type='submit' name='updateBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Update</button>";
+            // echo "<button type='submit' name='doneBtn' id='doneBtn' value='$rowid' class='waves-effect waves-teal btn'>Mark As Done</button>";
+            echo "<button type='submit' name='delBtn' value='$rowid' class='waves-effect waves-teal btn teal lighten-2'>Delete</button>";
+            echo "<button type='submit' name='updateBtn' value='$rowid' class='waves-effect waves-teal btn teal lighten-2'>Update</button>";
             echo "</div>";
             echo "</div>";
             echo "</li>";

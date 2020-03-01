@@ -66,8 +66,6 @@ class Model
         return $num_rows;
     }
 
-    
-
     public function getTodosForToday() {
         $userid = 0; //we assume we are not logged in yet
         if (isset($_SESSION['id'])) {
@@ -217,6 +215,18 @@ class Model
             return 0;
         }
     }
+
+    // public function getUserName($id) {
+    //     $stmt = $this->conn->prepare("SELECT
+    //     name FROM users
+    //     WHERE (id = :id)
+    // ");
+    //     $stmt->bindParam(':id', $_SESSION['id']);
+    //     $stmt->execute();
+    //     $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    //     $result = $stmt->fetchAll();
+    //     return $result[0]['name'];
+    // }
 
     public function addNewUser()
     {
