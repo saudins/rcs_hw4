@@ -19,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // echo "You are good to go! consider yourself logged in ";
         $_SESSION['user'] = $_POST['username'];
         $_SESSION['id'] = $model->getId($_POST['username']);
-        $_SESSION['count'] = $model->getCountOfAllTodos();
+        // $_SESSION['count'] = $model->getCountOfAllTodos();
         //https://www.w3schools.com/php/func_network_setcookie.asp
-        // $cookie_name = "uid";
-        // $cookie_value = $_SESSION['id'];
-        // setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+        $cookie_name = "uid";
+        $cookie_value = $_SESSION['id'];
+        setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
         header('Location: /');
     } else {
         //we could consider adding a specific message about login status
