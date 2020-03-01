@@ -77,7 +77,7 @@ class View
         }
 
         }
-                require_once "../src/templates/footer.php";
+            require_once "../src/templates/footer.php";
     }
 
     public function printRegister()

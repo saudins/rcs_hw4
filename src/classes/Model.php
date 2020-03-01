@@ -66,6 +66,8 @@ class Model
         return $num_rows;
     }
 
+    
+
     public function getTodosForToday() {
         $userid = 0; //we assume we are not logged in yet
         if (isset($_SESSION['id'])) {

@@ -19,6 +19,9 @@ const pw1 = document.getElementById('pw1');
 const pw2 = document.getElementById('pw2');
 const message = document.getElementById('message');
 const regBtn = document.getElementById('regBtn');
+const search = document.getElementById('search');
+const searchBtn = document.getElementById('searchBtn');
+
 
 let check = function() {
   if (pw1.value == 0){
@@ -33,10 +36,26 @@ let check = function() {
   }
 }
 
-let enable = function () {
-  if (pw1.value == pw2.value && pw1.value.length >= 8 && pw2.value.length) {
+let enableReg = function () {
+  if (pw1.value == pw2.value && pw1.value.length >= 8) {
     regBtn.disabled = false;
   }
 }
 
-enable();
+let disableReg = function () {
+  if (pw1.value != pw2.value || pw1.value.length < 8 || pw1.value.length < 8) {
+    regBtn.disabled = true;
+  }
+}
+
+let enableSearch = function () {
+  if (search.value.length > 0) {
+    searchBtn.disabled = false;
+  }
+}
+
+let disableSearch = function () {
+  if (search.value.length < 1) {
+    searchBtn.disabled = true;
+  }
+}

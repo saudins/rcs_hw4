@@ -1,8 +1,7 @@
-<!-- <h3>Add New Todo</h3> -->
 <ul class='collapsible' data-collapsible='accordion'>
     <li>
         <div class="collapsible-header">
-            <i class = "material-icons">filter_drama</i>Add New ToDo</div>
+            <i class = "material-icons">filter_drama</i>Add New To-Do</div>
             <div class="collapsible-body">
                 <span>
                     <form action="index.php" method="POST">
