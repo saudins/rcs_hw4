@@ -8,7 +8,8 @@
         <span id='message'></span>
         </div>
     </div>
-    <button type="Submit" id="regBtn" class="btn waves-effect waves-light" disabled>Register</button>
-
-
+    <button type="Submit" id="regBtn" class="btn waves-effect waves-light" disabled>
+        <i class="material-icons right">arrow_right_alt</i>
+        Register
+    </button>
 </form>

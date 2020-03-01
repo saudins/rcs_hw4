@@ -27,8 +27,18 @@ if (isset($_SESSION['id'])) {
         ToDo App
       </a>
     <ul>
-        <li><a href="index.php">Home</a></li>
-        <li><a href="register.php">Register</a></li>
+        <li>
+          <a href="index.php">
+            <i class="material-icons left">home</i>
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="register.php">
+            <i class="material-icons left">account_circle</i>
+            Register
+          </a>
+        </li>
     </ul>
     </nav>
 
