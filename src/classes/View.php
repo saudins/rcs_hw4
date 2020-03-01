@@ -47,7 +47,7 @@ class View
 
                     switch ($colname) {
                         case "summary":
-                            echo "<div class='collapsible-header'><i class='material-icons'>explore</i>$cell</div>";
+                            echo "<div class='collapsible-header'><i class='material-icons'>assignment</i>$cell</div>";
                             echo "<div class='collapsible-body'>";
                             echo "<label for='summary'>Summary</label>";
                             echo "<input class='todos-cell' type='text' name='summary' value='$cell'></input>";

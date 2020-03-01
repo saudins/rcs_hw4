@@ -13,15 +13,12 @@ class Model
         $pw = $config['pw'];
         $this->conn = new PDO("mysql:host=$server;dbname=$db;charset=utf8", $user, $pw);
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        // echo "<hr>Connected Successfully!<hr>";
     }
 
     public function getTodos($summary = null) {
-        $userid = 0; //we assume we are not logged in yet
+        $userid = 0; 
         if (isset($_SESSION['id'])) {
-            // die("Need to figure out what to show when user is not logged in");
             $userid = $_SESSION['id'];
-            //consider not doing anything maybe
         }
 
         if($summary) {
@@ -37,7 +34,6 @@ class Model
                 FROM todos
                 WHERE user_id = $userid ORDER BY deadline");
         }
-        // $stmt->bindParam(':todo', $todos);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $allRows = $stmt->fetchAll();
@@ -45,33 +41,30 @@ class Model
         $this->view->printTodos($allRows);
     }
 
-
-    public function getCountOfAllTodos() {
-        $userid = 0; //we assume we are not logged in yet
-        if (isset($_SESSION['id'])) {
-            // die("Need to figure out what to show when user is not logged in");
-            $userid = $_SESSION['id'];
-            //consider not doing anything maybe
-        }
-        $stmt = $this->conn->prepare(
-            "SELECT *
-            FROM todos
-            WHERE user_id = $userid");
-        // $stmt->bindParam(':todo', $todos);
-        $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $allRows = $stmt->fetchAll();
-        // var_dump($allRows);
-        $num_rows = mysqli_num_rows($allRows);
-        return $num_rows;
-    }
+    // public function getCountOfAllTodos() {
+    //     $userid = 0; //we assume we are not logged in yet
+    //     if (isset($_SESSION['id'])) {
+    //         // die("Need to figure out what to show when user is not logged in");
+    //         $userid = $_SESSION['id'];
+    //         //consider not doing anything maybe
+    //     }
+    //     $stmt = $this->conn->prepare(
+    //         "SELECT *
+    //         FROM todos
+    //         WHERE user_id = $userid");
+    //     // $stmt->bindParam(':todo', $todos);
+    //     $stmt->execute();
+    //     $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    //     $allRows = $stmt->fetchAll();
+    //     // var_dump($allRows);
+    //     $num_rows = mysqli_num_rows($allRows);
+    //     return $num_rows;
+    // }
 
     public function getTodosForToday() {
-        $userid = 0; //we assume we are not logged in yet
+        $userid = 0; 
         if (isset($_SESSION['id'])) {
-            // die("Need to figure out what to show when user is not logged in");
-            $userid = $_SESSION['id'];
-            //consider not doing anything maybe
+            $userid = $_SESSION['id'];        
         }
         $stmt = $this->conn->prepare(
             "SELECT id, summary, description, deadline, status
@@ -86,12 +79,11 @@ class Model
     }
 
     public function getTodosOverdue() {
-        $userid = 0; //we assume we are not logged in yet
+        $userid = 0; 
         if (isset($_SESSION['id'])) {
-            // die("Need to figure out what to show when user is not logged in");
             $userid = $_SESSION['id'];
-            //consider not doing anything maybe
         }
+
         $stmt = $this->conn->prepare(
             "SELECT id, summary, description, deadline, status
             FROM todos
@@ -107,8 +99,7 @@ class Model
     public function addTodo() {
        
         if (!isset($_SESSION['id'])) {
-            die("Need to figure out what to show when user is not logged in");
-            //consider not doing anything maybe
+            return;
         }
 
         $stmt = $this->conn->prepare("INSERT 
@@ -133,8 +124,8 @@ class Model
         }
 
         $stmt = $this->conn->prepare("DELETE FROM todos WHERE id = (:todoid)");
-
         $stmt->bindParam(':todoid', $_POST['delBtn']);
+
         $stmt->execute();
         $this->getTodos();
         //"DELETE FROM `todos` WHERE `todos`.`id` = 3"
@@ -148,8 +139,8 @@ class Model
                 updated = CURRENT_TIMESTAMP()
                 WHERE id = (:todoid)");
 
-        $stmt->bindParam(':summary', $_POST['summary']); //we have <input name="name"
-        $stmt->bindParam(':description', $_POST['description']); //we have <input name="artist"
+        $stmt->bindParam(':summary', $_POST['summary']); 
+        $stmt->bindParam(':description', $_POST['description']);
 
         $stmt->bindParam(':todoid', $_POST['updateBtn']);
         $stmt->execute();
@@ -157,20 +148,18 @@ class Model
         //UPDATE `todos` SET `summary` = 'Finish final home work quickly' WHERE `todos`.`id` = 3
     }
 
-    public function markAsDone()
-    {
-        $stmt = $this->conn->prepare("UPDATE todos
-                SET status = 1,
-                updated = CURRENT_TIMESTAMP()
-                WHERE id = (:todoid)");
+    // public function markAsDone()
+    // {
+    //     $stmt = $this->conn->prepare("UPDATE todos
+    //             SET status = 1,
+    //             updated = CURRENT_TIMESTAMP()
+    //             WHERE id = (:todoid)"); // set status to 1 which means - done
 
-        // $stmt->bindParam(':summary', $_POST['summary']); //we have <input name="name"
-        // $stmt->bindParam(':description', $_POST['description']); //we have <input name="artist"
-        $stmt->bindParam(':todoid', $_POST['doneBtn']);
-        $stmt->execute();
-        $this->getTodos();
-        //UPDATE `todos` SET `summary` = 'Finish final home work quickly' WHERE `todos`.`id` = 3
-    }
+    //     $stmt->bindParam(':todoid', $_POST['doneBtn']);
+    //     $stmt->execute();
+    //     $this->getTodos();
+    //     //UPDATE `todos` SET `summary` = 'Finish final home work quickly' WHERE `todos`.`id` = 3
+    // }
 
     public function getRegister()
     {
@@ -189,8 +178,6 @@ class Model
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $result = $stmt->fetchAll();
         if (count($result) > 0) {
-            // var_dump($result);
-            // die("For now");
             return $result[0]['id'];
         } else {
             return 0;
@@ -208,38 +195,20 @@ class Model
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $result = $stmt->fetchAll();
         if (count($result) > 0) {
-            // var_dump($result);
-            // die("For now");
             return $result[0]['hash'];
         } else {
             return 0;
         }
     }
 
-    // public function getUserName($id) {
-    //     $stmt = $this->conn->prepare("SELECT
-    //     name FROM users
-    //     WHERE (id = :id)
-    // ");
-    //     $stmt->bindParam(':id', $_SESSION['id']);
-    //     $stmt->execute();
-    //     $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    //     $result = $stmt->fetchAll();
-    //     return $result[0]['name'];
-    // }
-
     public function addNewUser()
     {
         if ($this->getHash($_POST['username']) != 0) {
-            // die("Got this user already");
-            //or possible bad hash
             header('Location: /register.php');
             exit();
         }
-
         if ($_POST['pw1'] !== $_POST['pw2']) {
             header('Location: /register.php');
-            // echo ("Passwords don't match"); 
             exit();
         } else {
             //https://stackoverflow.com/questions/1361340/how-to-insert-if-not-exists-in-mysql
