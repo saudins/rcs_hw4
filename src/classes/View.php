@@ -65,7 +65,7 @@ class View
                     }
             }
 
-            echo "<div class='two-buttons'>";
+            echo "<div class='action-buttons'>";
             echo "<button type='submit' name='doneBtn' id='doneBtn' value='$rowid' class='waves-effect waves-teal btn'>Mark As Done</button>";
             echo "<button type='submit' name='delBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Delete</button>";
             echo "<button type='submit' name='updateBtn' value='$rowid' class='waves-effect waves-teal btn-flat'>Update</button>";

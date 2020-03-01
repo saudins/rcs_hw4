@@ -44,8 +44,14 @@ footer {
     padding: 20px;
 }
 
-.two-buttons {
+.filter-buttons {
     text-align: center;
+    margin: 10px;
+}
+
+.action-buttons {
+    text-align: center;
+    margin-top: 20px;
 }
 
 .register-input {
