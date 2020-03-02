@@ -19,10 +19,11 @@ class Controller
 
         if (isset($_GET['search-sum'])) {
                 $this->model->getTodos($_GET['search-sum']);
+                
         } else {
             $this->model->getTodos();
-        }
            
+        } 
        
     }
 
