@@ -18,7 +18,7 @@ class View
                 $filterValue = "";
             }
 
-            // $num= $_SESSION['count'];
+            $username = $_SESSION['count'];
             $user = $_SESSION['user'];
             echo "<img id='hero-crop' src='assets/to-do-crop.jpg' alt='to-do-app.jgp'>";
             // echo "<h1>ToDo App</h1>";

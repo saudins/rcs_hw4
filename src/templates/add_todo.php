@@ -15,7 +15,7 @@
                     <label for="deadline">Deadline</label>
                     <input type="date" name="deadline" required min="2020-02-24">
 
-                    <button type="submit" name="addBtn" class="waves-effect waves-light btn">ADD NEW TODO!</button>
+                    <button type="submit" name="addBtn" class="waves-effect waves-light btn">Add New To-Do</button>
 
                     </form>
                 </span>
